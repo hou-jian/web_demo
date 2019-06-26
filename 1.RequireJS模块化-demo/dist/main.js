@@ -1,0 +1,1 @@
+define("utils",[],function(){return{log:function(){console.log.apply(console,arguments)},e:function(n){return document.querySelector(n)},es:function(n){return document.querySelectorAll(n)}}}),require(["utils"],function(n){n.e("#btn").addEventListener("click",function(){n.log("?")})}),define("main",function(){});
