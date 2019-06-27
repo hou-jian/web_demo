@@ -1,14 +1,38 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>require</title>
+    <title>todoList</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    <button id="btn">点我</button>
-    <!-- data-main属性不可省略，用于指定主代码所在的脚本文件 -->
-    <script data-main="./js/main.js" src="./js/require.js"></script>
+    <div id="id-todo">
+        <header>
+            <div class="add-task">
+                <div class="form">
+                    <input type="text" placeholder="点击添加任务...">
+                    <button type="button"></button>
+                </div>
+            </div>
+        </header>
+        <div class="container clearfix">
+            <ul class="todo-List"></ul>
+        </div>
+        <span id="f"></span>
+        <div class="accomplish clearfix">
+            <ul class="todo-accomplish clearfix"></ul>
+        </div>
+
+    </div>
+
+    <script src="js/iviv.js"></script>
+    <script src='js/todo.js'></script>
+
+    <!-- 指定入口文件 -->
+    <script src="./script/require.js"></script>
 </body>
+
 </html>
