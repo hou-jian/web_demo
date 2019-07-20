@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 先设置viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>移动端rem适配方案-demo</title>
+    <script>
+        // 参数：设计图的宽
+        // 使用：假如量取设计图元素宽10像素，css设置为0.1rem(除以100)即可
+        !(function(designWidth) {
+            // 视口的CSS像素宽
+            var viewportWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+            var htmlFontSize
+            /*
+            为了按比例还原设计稿：
+                1px / 设计图宽 = 1rem / 页面宽
+                1rem = (1 / 设计图宽) * 页面宽
+                font-size不能太小，所以放大100倍
+                那么↓↓↓
+            d*/
+            htmlFontSize = (1 / designWidth) * viewportWidth * 100
+            document.documentElement.style.fontSize = htmlFontSize + 'px'
+        })(750);
+    </script>
+</head>
+
+<body>
+    <!-- 这个例子可以看到，div始终会占据一半宽度，说明适配是正确的 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 3.75rem;
+            height: 1rem;
+            background: pink;
+        }
+    </style>
+    <div></div>
+</body>
+
+</html>
