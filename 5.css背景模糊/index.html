@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        
+        #blur {
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+        #blur::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: url('http://p1.music.126.net/J6Sv8FAqqDg-p8By9DSRqg==/109951164218147135.webp?imageView&thumbnail=247x0&quality=75&tostatic=0&type=webp');
+            filter: blur(3px);
+            z-index: -1 ;
+        }
+    </style>
+    <div id="blur" style="color: red;">
+        背景模糊加在伪元素上，并且设置z-index: -1; <br>
+        这样字就能看清咯
+    </div>
+</body>
+</html>
