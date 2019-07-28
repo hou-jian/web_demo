@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;}
+       /* 必须给父容器设置高度，不然不会滚动嗷 */
+        .wrapper {
+            height: 100vh;
+            width: 100vw;
+            background: #ddd;
+        }
+        li {
+            height: 100px;
+            outline: 1px pink dotted;
+        }
+    </style>
+    <script src="https://unpkg.com/better-scroll/dist/bscroll.min.js"></script>
+</head>
+
+<body>
+    <p style="z-index: 100;">参考链接: 
+        <a href="https://juejin.im/post/59b777015188257e764c716f#heading-7">一篇不错的文章</a>、
+        <a href="https://ustbhuangyi.github.io/better-scroll/#/examples/vertical-scroll">官方网站</a>
+    </p>
+    <div class="wrapper">
+        <ul class="content">
+            <li>测试1</li>
+            <li>测试2</li>
+            <li>测试3</li>
+            <li>测试4</li>
+            <li>测试5</li>
+            <li>测试6</li>
+            <li>测试7</li>
+            <li>测试8</li>
+            <li>测试9</li>
+            <li>测试10</li>
+            <li>测试1</li>
+            <li>测试2</li>
+            <li>测试3</li>
+            <li>测试4</li>
+            <li>测试5</li>
+            <li>测试6</li>
+            <li>测试7</li>
+            <li>测试8</li>
+            <li>测试9</li>
+            <li>测试10</li>
+            
+    </div>
+    <script>
+        let wrapper = document.querySelector('.wrapper')
+        let scroll = new BScroll(wrapper)
+    </script>
+</body>
+
+</html>
