@@ -35,7 +35,7 @@ class View {
                 </div>
                 <div>
                     <button id="addOne">加1</button>
-                    <button id="minus">减1</button>
+                    <button id="subtract">减1</button>
                     <button id="reset">归0</button>
                 </div>
             </div>
@@ -49,13 +49,13 @@ class View {
     }
     // 渲染函数，把模板渲染到页面
     render(data) {
+
         var h = this.template
 
-
         h = h.replace('__name__', data.name)
-
         h = h.replace('__number__', data.number)
         h = h.replace('__id__', data.id)
+        
         this.el.insertAdjacentHTML('beforeend', h)
     }
 }
@@ -66,10 +66,13 @@ class Controller {
         this.model = new Model()
         this.view = new View()
         // 请求成功渲染页面
-        this.model.fetch('./mock.json').then((data) => { this.view.render(data) })
-        
-        // 绑定事件做一些事情
-        // this.bindEvents()
+        this.model.fetch('./mock.json').then((data) => { 
+            this.view.render(data) 
+            // 可以做一些事了
+        })
     }
+
 }
-new Controller()
+
+// 入口
+var app = new Controller()
