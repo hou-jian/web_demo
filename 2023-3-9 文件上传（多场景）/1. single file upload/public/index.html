@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单文件上传</title>
+</head>
+
+<body>
+  <!-- 可以用 accept="image/*" 限制只选图片，
+    但需要注意该属性的兼容性，
+    以及用户可以通过改文件后缀绕过，可以通过二级制文件头检查 -->
+  <input id="upload-file" type="file">
+  <button id="upload-btn"">上传文件</button>
+
+  <script>
+
+    const uploadInput = document.querySelector('#upload-file')
+    const uploadBtn = document.querySelector('#upload-btn')
+
+    uploadBtn.addEventListener('click', (e) => {
+      const file = uploadInput.files[0]
+      if(!file) return //为空return，也可以在这里校验文件类型
+      upload('http://localhost:3000/upload/single', file)
+    })
+
+    async function upload(url, file) {
+      const formData = new FormData()
+      formData.set('fileName', file)
+      try {
+        const response = await fetch(url, {
+          method: 'post',
+          body: formData
+        })
+        if(response.ok) {
+          let data = await response.json()
+          if(data.msg === 'ok') {
+            const img = document.createElement('img')
+            img.src = data.url
+            document.body.appendChild(img)
+          }
+        } else {
+          alert(" HTTP-Error: " + response.status);
+        }
+      } catch(error) {
+        console.log('失败', error)
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
