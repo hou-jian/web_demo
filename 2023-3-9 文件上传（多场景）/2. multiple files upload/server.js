@@ -2,8 +2,6 @@ const fs = require('fs-extra')
 const path = require('path')
 const express = require('express')
 const multer = require('multer')
-// const cors = require('cors')
-// app.use(cors()) // 本例开放了public，直接同源访问，如果需要跨域可以安装这个包
 
 const PORT = 3000
 const RESOURCE_URL = `http://localhost:${PORT}` //上传后资源的URL地址
@@ -17,15 +15,21 @@ const storage = multer.diskStorage({
     cb(null, UPLOAD_DIR)
   },
   filename: function(req, file, cb) { //设置文件名
-    cb(null, `${file.originalname}`)
+    const originalname = Buffer.from(file.originalname, 'latin1').toString('utf-8') //解决中文乱码问题
+    cb(null, originalname)
   }
 })
 const upload = multer({ storage: storage })
 
-app.post('/upload/single', upload.single('fileName'), (req, res) => {
+app.post('/upload/multiple', upload.fields([{ name: 'fileName' }]), (req, res) => {
+  const urls = req.files.fileName.map(file => {
+    const originalname = Buffer.from(file.originalname, 'latin1').toString('utf-8')
+    return `${RESOURCE_URL}/uploads/${originalname}`
+  })
+
   res.json({
     msg: 'ok',
-    url: `${RESOURCE_URL}/uploads/${req.file.originalname}`
+    urls: urls
   })
 })
 
