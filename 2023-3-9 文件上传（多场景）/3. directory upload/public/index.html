@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多文件上传</title>
+</head>
+
+<body>
+  <!-- 只需要加个 webkitdirectory 属性，其他代码和多文件上传一样 -->
+  <input id="upload-file" type="file" accept="image/*" webkitdirectory>
+  <button id="upload-btn">上传文件</button>
+
+  <script>
+
+    const uploadInput = document.querySelector('#upload-file')
+    const uploadBtn = document.querySelector('#upload-btn')
+
+    uploadBtn.addEventListener('click', (e) => {
+      let files = uploadInput.files
+      if(!files.length) return //为空return，也可以在这里校验文件类型
+      files = Array.from(files)
+      upload('http://localhost:3000/upload/multiple', files)
+    })
+
+    async function upload(url, files) {
+      const formData = new FormData()
+      files.forEach(file => {
+        formData.append('fileName', file)
+      })
+      console.log(formData.getAll('fileName'))
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData,
+        })
+        if(!response.ok) {
+          console.log(" HTTP-Error: " + response.status)
+          return
+        }
+        let data = await response.json()
+        data.urls.forEach(url => { //添加到body看看效果
+          const img = document.createElement('img')
+          img.src = url
+          document.body.appendChild(img)
+        })
+      } catch(error) {
+        console.log('请求出错', error)
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>

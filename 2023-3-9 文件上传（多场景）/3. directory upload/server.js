@@ -1,3 +1,4 @@
+// 后端代码和多文件上传一样，接口名称也没改。
 const fs = require('fs-extra')
 const path = require('path')
 const express = require('express')

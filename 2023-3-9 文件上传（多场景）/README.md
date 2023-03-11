@@ -14,6 +14,10 @@
 
 ## 注意点
 
+### 服务端文件类型检测和大小限制
+
+这两点 demo 中没有做，以后用到需要注意。
+
 ###  `accept="image/*"` 
 
 ```html
@@ -23,8 +27,24 @@
 上面使用 `accept="image/*"` 限制只选图片，有两个注意点：
 
 - 兼容性
-- 用户可以通过改文件后缀绕过，可以通过二级制文件头检查
+- 用户可以通过改文件后缀绕过，可以通过二级制文件头检查。
 
-### 服务端文件类型检测和大小限制
+![accept attribute for file input](assets/accept attribute for file input.png)
 
-这两点 demo 中没有做，以后用到需要注意
+### `multiple` 多文件选择兼容性
+
+```html
+<input id="upload-file" type="file" accept="image/*" multiple>
+```
+
+![image-20230311224937252](assets/image-20230311224937252.png)
+
+### `webkitdirectory` 目录上传兼容性
+
+```html
+<input id="uploadFile" type="file" accept="image/*" webkitdirectory />
+```
+
+![image-20230311225219664](assets/image-20230311225219664.png)
+
+如上，只有现代浏览器能用了。

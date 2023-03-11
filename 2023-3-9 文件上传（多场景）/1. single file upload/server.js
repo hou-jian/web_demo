@@ -13,7 +13,7 @@ const app = express()
 // 使用 multer 来处理 multipart/form-data 类型的表单数据
 const storage = multer.diskStorage({
   destination: function(req, file, cb) { //设置存储路径
-    fs.ensureDir(UPLOAD_DIR) //确保有这个目录，没有则创建
+    fs.ensureDirSync(UPLOAD_DIR) //确保有这个目录，没有则创建
     cb(null, UPLOAD_DIR)
   },
   filename: function(req, file, cb) { //设置文件名
