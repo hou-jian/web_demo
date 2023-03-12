@@ -27,9 +27,9 @@
       upload('http://localhost:3000/upload/single', file)
     })
 
-    async function upload(url, file) {
+    async function upload(url, file, fieldName = "fileName") {
       const formData = new FormData()
-      formData.set('fileName', file)
+      formData.set(fieldName, file)
       try {
         const response = await fetch(url, {
           method: 'post',
