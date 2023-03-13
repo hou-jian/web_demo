@@ -14,9 +14,9 @@
 
 ## 注意点
 
-### 服务端文件类型检测和大小限制
+### 前后端文件类型检测和大小、数量限制
 
-这两点 demo 中没有做，以后用到需要注意。
+这几点 demo 中没有做，以后用到需要注意。
 
 ###  `accept="image/*"` 
 
@@ -48,3 +48,11 @@
 ![image-20230311225219664](assets/image-20230311225219664.png)
 
 如上，只有现代浏览器能用了。另外一点，你选择一个目录，这个目录内的所有层次都会被选择。
+
+### DataTransferItem API: `webkitGetAsEntry`
+
+> 拖拽上传用到 `webkitGetAsEntry` 接口获取文件信息（fullPath、isDirectory、isFile、name），通过 isDirectory 判断是文件夹，递归获取所有层级的文件。
+
+![image-20230314052214351](assets/image-20230314052214351.png)
+
+如上，仅支持现代浏览器。
