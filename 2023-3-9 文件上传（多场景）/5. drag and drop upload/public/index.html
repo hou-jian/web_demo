@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拖拽文件上传</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #upload-box {
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    #drop-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 200px;
+      border: 1px dashed #999;
+    }
+
+    #drop-area span {
+      color: #999;
+      font-size: 2em;
+    }
+
+    #drop-area.highlighted {
+      border: 2px dashed #999;
+      background-color: #eee;
+    }
+
+    #preview-area {
+      width: 100%;
+      margin: 50px 0;
+    }
+
+    #preview-area img {
+      width: 25%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="upload-box">
+    <div id="drop-area">
+      <span>拖动图片到这里...</span>
+    </div>
+    <div id="preview-area"></div>
+  </div>
+  <script>
+    /*
+    注意：
+    - 本例支持拖拽：单、多、文件夹（多层级）上传
+    - 没有限制文件数量、大小
+    - 扁平化处理拖入的文件/文件夹，调用的多文件上传接口，上传图片
+    - 后缀检查图片可被绕过，需要二进制头检查
+    - 正常项目需要预览、编辑图片后，再点击上传，本例偷了下懒
+    - 仅支持现代浏览器
+    */
+    const dropArea = document.querySelector('#drop-area')
+    const previewArea = document.querySelector('#preview-area')
+    const IMAGE_MIME_REGEX = /^image\/(jpe?g|gif|png|webp)$/i //同样的，用户可以通过该后缀绕过，前、后端通过二进制头检查。
+
+    // 阻止默认拖拽行为
+    // 注意：这里如果直接 ["dragenter", "dragover"].forEach(...) ，
+    // 需要加分号（开头、结尾都可以），不然合并行就会造成bug
+    const names1 = ["dragenter", "dragover", "dragleave", "drop"]
+    names1.forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults)
+      document.body.addEventListener(eventName, preventDefaults)
+    })
+
+    // 切换高亮
+    const names2 = ["dragenter", "dragover"]
+    const names3 = ["dragleave", "drop"]
+    names2.forEach(eventName => {
+      dropArea.addEventListener(eventName, highlight)
+    })
+    names3.forEach(eventName => {
+      dropArea.addEventListener(eventName, unhighlight)
+    })
+
+    // drop 文件处理
+    dropArea.addEventListener('drop', handleDrop)
+
+    // 扁平化处理 drop 的所在文件/文件夹（所有层级），并上传 IMAGE_MIME_REGEX 指定的图片
+    async function handleDrop(e) {
+      let files = null
+      const dataTransferItemList = e.dataTransfer.items//通过 DataTransferItem 接口才能获得文件信息（fullPath、isDirectory、isFile、name）
+      files = await scanFile(dataTransferItemList) //扫描drop的文件/文件夹（所有层级）
+      files = files.filter(file => { //过滤出图片
+        if(IMAGE_MIME_REGEX.test(file.type)) {
+          return true
+        }
+      })
+      previewImage(files, previewArea)
+      upload('http://localhost:3000/upload/multiple', files)
+    }
+
+    // 扫描drop的文件/文件夹（所有层级）
+    async function scanFile(dataTransferItemList) {
+      const itemList = []
+      const entrys = []
+      for(const item of dataTransferItemList) {
+        const entry = item.webkitGetAsEntry() //这个对象包含了 isDirectory、isFile等信息
+        entrys.push(entry)
+      }
+      const files = await getFilesFromEntrys(entrys)
+      return files
+    }
+
+    //递归扫描，最终拿到所有文件
+    async function getFilesFromEntrys(entrys) {
+      let files = []
+      for(const entry of entrys) {
+        if(entry.isDirectory) {
+          const reader = entry.createReader()
+          const entryRes = await new Promise((resolve) => {
+            reader.readEntries(entrysNext => resolve(entrysNext))//readEntries获取文件夹内对象信息是异步的
+          })
+          const filesRes = await getFilesFromEntrys(entryRes)//递归，扫描所有层级
+          files = [...files, ...filesRes]
+        } else {
+          const file = await new Promise((resolve) => {
+            entry.file(file => resolve(file))//entry.file获取file是异步的
+          })
+          files.push(file)
+        }
+      }
+      return files
+    }
+
+    async function upload(url, files, fieldName = "fileName") {
+      const formData = new FormData()
+      files.forEach(file => {
+        formData.append(fieldName, file)
+      })
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData,
+        })
+        if(!response.ok) {
+          console.log(" HTTP-Error: " + response.status)
+          return
+        }
+        let data = await response.json()
+        console.log('成功', data)
+      } catch(error) {
+        console.log('请求出错', error)
+      }
+    }
+
+    function previewImage(files, container) {
+      container.innerHTML = ''
+      const fragment = new DocumentFragment()
+      files.forEach(file => {
+        let img = document.createElement("img")
+        img.src = URL.createObjectURL(file)
+        fragment.appendChild(img)
+      })
+      container.appendChild(fragment)
+    }
+
+    function preventDefaults(e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
+    function highlight(e) {
+      dropArea.classList.add("highlighted")
+    }
+
+    function unhighlight(e) {
+      dropArea.classList.remove("highlighted")
+    }
+
+  </script>
+</body>
+
+</html>
