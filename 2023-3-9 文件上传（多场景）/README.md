@@ -16,7 +16,11 @@
 
 ### 前后端文件类型检测和大小、数量限制
 
-这几点 demo 中没有做，以后用到需要注意。
+这几点 demo 中没有做，以后用到需注意
+
+### 后端同名文件会被覆盖
+
+可以加时间搓解决，以后用到需注意
 
 ###  `accept="image/*"` 
 
@@ -56,3 +60,16 @@
 ![image-20230314052214351](assets/image-20230314052214351.png)
 
 如上，仅支持现代浏览器。
+
+### `navigator.clipboard.read()` 异步读取剪切板
+
+这个 api 复制浏览器图片正常，但是复制 windows 图片读取不到，兼容性也不好，索性用 `clipboardData` 接口读取了
+
+```js
+editArea.addEventListener('paste', async (e) => {
+  e.preventDefault()
+  files = Array.from(e.clipboardData.files)
+  if(files.length === 0) return
+})
+```
+

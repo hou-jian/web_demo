@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>剪贴板上传</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #edit-area {
+      width: 100%;
+      min-height: 200px;
+      border: 1px solid #ccc;
+    }
+
+    #edit-area img {
+      display: inline-block;
+      max-width: 50%;
+      margin: 5px auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="edit-area" contentEditable="true"></div>
+  <button id="upload-btn">上传图片</button>
+
+  <script>
+
+    const editArea = document.querySelector('#edit-area')
+    const uploadBtn = document.querySelector('#upload-btn')
+    const IMAGE_MIME_REGEX = /^image\/(jpe?g|gif|png|webp)$/i //同样的，用户可以通过该后缀绕过，前、后端通过二进制头检查。
+    let files = []
+
+    editArea.addEventListener('paste', async (e) => {
+      e.preventDefault()
+      // navigator.clipboard.read() //这个异步api无法读取windows资源管理器复制的图片
+      files = Array.from(e.clipboardData.files)
+      if(files.length === 0) return
+      files = files.filter(file => IMAGE_MIME_REGEX.test(file.type))
+      previewImage(files, editArea)
+    })
+
+    uploadBtn.addEventListener('click', () => {
+      if(window.confirm('图片将上传至服务器，确认吗？')) {
+        upload('http://localhost:3000/upload/multiple', files)
+      }
+    })
+
+    function previewImage(files, container) {
+      const fragment = new DocumentFragment()
+      files.forEach(file => {
+        let img = document.createElement("img")
+        img.src = URL.createObjectURL(file)
+        fragment.appendChild(img)
+      })
+      container.appendChild(fragment)
+    }
+
+    async function upload(url, files, fieldName = "fileName") {
+      const formData = new FormData()
+      files.forEach(file => {
+        formData.append(fieldName, file)
+      })
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData,
+        })
+        if(!response.ok) {
+          console.log(" HTTP-Error: " + response.status)
+          return
+        }
+        let data = await response.json()
+        console.log(data)
+      } catch(error) {
+        console.log('请求出错', error)
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
