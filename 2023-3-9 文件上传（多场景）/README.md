@@ -73,3 +73,6 @@ editArea.addEventListener('paste', async (e) => {
 })
 ```
 
+## 参考
+
+主要就是[文件上传，搞懂这8种场景就够了](https://juejin.cn/post/6980142557066067982)，这篇文章的内容。由于不熟悉 `Koa` 所有后端用的 `Express`，参考的其他零散文章找不到了。
