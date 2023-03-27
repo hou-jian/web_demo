@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Worker Demo</title>
+</head>
+
+<body>
+  <img src="./imgs/logo.gif" alt="demo image" />
+  <button id="fetch1">click</button>
+  <script>
+    if('serviceWorker' in navigator) {
+      // 防止作用域污染，在安装前，注销掉所有已生效 Service Worker
+      navigator.serviceWorker.getRegistrations()
+        .then(regs => {
+          for(let reg of regs) {
+            reg.unregister()
+          }
+          navigator.serviceWorker.register('./sw.js')
+        })
+    }
+    const fetch1 = document.querySelector('#fetch1')
+    fetch1.addEventListener('click', async () => {
+      const data1 = await fetch('http://127.0.0.1:5500/data.txt').then(res => res.text())
+      const data2 = await fetch('/data.txt').then(res => res.text())
+      const data3 = await fetch('/data.json').then(res => res.text())
+      const data4 = await fetch('/user.json').then(res => res.text())
+
+      console.log(data1)
+      console.log(data2)
+      console.log(data3)
+      console.log(data4)
+
+    })
+  </script>
+</body>
+
+</html>
