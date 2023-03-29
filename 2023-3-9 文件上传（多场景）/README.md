@@ -14,13 +14,13 @@
 
 ## 注意点
 
-### 前后端文件类型检测和大小、数量限制
+### 前、后端都没有做文件类型检测、大小和数量限制
 
-这几点 demo 中没有做，以后用到需注意
+为了保证演示的简洁性，这几点，Demo 中都没有做，以后用到需注意。
 
 ### 后端同名文件会被覆盖
 
-可以加时间搓解决，以后用到需注意
+可以加时间搓解决，以后用到需注意。
 
 ###  `accept="image/*"` 
 
@@ -72,6 +72,14 @@ editArea.addEventListener('paste', async (e) => {
   if(files.length === 0) return
 })
 ```
+
+### 服务端上传到sm.ms需要填写自己的token
+
+访问 https://sm.ms/home/apitoken 获取你的token。
+
+在 `7. server file upload\uploadImage.js` 中填写，没填会报错。
+
+同样都没有做文件校验和大小限制，sm.ms 限制5M。
 
 ## 参考
 
