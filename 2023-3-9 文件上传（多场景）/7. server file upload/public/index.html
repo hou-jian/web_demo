@@ -28,18 +28,18 @@
       files.forEach(file => {
         formData.append(fieldName, file)
       })
-      
+
       try {
         const response = await fetch(url, {
           method: 'POST',
           body: formData,
         })
         if(!response.ok) {
-          console.log(" HTTP-Error: " + response.status)
+          console.log(await response.json())
           return
         }
         let data = await response.json()
-        console.log('上传完成 success 为 true 才表示成功', data)
+        console.log('上传完成(不代表成功)', data)
       } catch(error) {
         console.log('请求出错', error)
       }

@@ -14,9 +14,9 @@
 
 ## 注意点
 
-### 前、后端都没有做文件类型检测、大小和数量限制
+### 1 -6 前、后端都没有做文件类型检测、大小和数量限制
 
-为了保证演示的简洁性，这几点，Demo 中都没有做，以后用到需注意。
+为了保证演示的简洁性，文件类型检查、大小限制、数量限制、文件防止重名等功能见7号文件夹。
 
 ### 后端同名文件会被覆盖
 
@@ -31,7 +31,7 @@
 上面使用 `accept="image/*"` 限制只选图片，有两个注意点：
 
 - 兼容性
-- 用户可以通过改文件后缀绕过，可以通过二级制文件头检查。
+- 用户可以通过改文件后缀绕过，可以通过二级制文件头检查（见 `7. server file upload`）。
 
 ![accept attribute for file input](assets/accept attribute for file input.png)
 
@@ -73,14 +73,12 @@ editArea.addEventListener('paste', async (e) => {
 })
 ```
 
-### 服务端上传到sm.ms需要填写自己的token
+### 服务端上传到 sm.ms 需要填写自己的 token
 
-访问 https://sm.ms/home/apitoken 获取你的token。
-
-在 `7. server file upload\uploadImage.js` 中填写，没填会报错。
-
-同样都没有做文件校验和大小限制，sm.ms 限制5M。
+访问 https://sm.ms/home/apitoken 获取你的 token，在 `7. server file upload\uploadImage.js` 中填写，否则报错。
 
 ## 参考
 
-主要就是[文件上传，搞懂这8种场景就够了](https://juejin.cn/post/6980142557066067982)，这篇文章的内容。由于不熟悉 `Koa` 所有后端用的 `Express`，参考的其他零散文章找不到了。
+- 主要就是[文件上传，搞懂这8种场景就够了](https://juejin.cn/post/6980142557066067982)，这篇文章的内容。由于不熟悉 `Koa` 所有后端用的 `Express`。
+
+- 以及 ChatGPT。
