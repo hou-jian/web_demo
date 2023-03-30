@@ -27,7 +27,7 @@
       const data1 = await fetch('http://127.0.0.1:5500/data.txt').then(res => res.text())
       const data2 = await fetch('/data.txt').then(res => res.text())
       const data3 = await fetch('/data.json').then(res => res.text())
-      const data4 = await fetch('/user.json').then(res => res.text())
+      const data4 = await fetch('/user.json').then(res => res.json())
 
       console.log(data1)
       console.log(data2)

@@ -14,7 +14,6 @@ class Router {
 
   initProxy() {
     self.addEventListener('fetch', event => {
-      console.log(event)
       // 当拦截到资源请求时，会遍历已注册的路由规则，并执行相应规则所对应的策略
       for(let route of this.routes) {
         // 使用前面封装好的 match 函数进行路由规则匹配
@@ -85,3 +84,23 @@ function respond(event, handler) {
     }
   } catch(e) { }
 }
+
+// self.addEventListener('fetch', event => {
+  
+//   // 完整或相对URL匹配
+//   if(match('/data.txt', event.request)) {
+//     return event.respondWith(new Response('完整或相对URL匹配成功'))
+//   }
+//   // 正则匹配
+//   if(match(/\/data\.json/, event.request)) {
+//     return event.respondWith(new Response('正则匹配成功'))
+//   }
+//   // 自定义匹配
+//   if(match(
+//     request => request.url.indexOf('/user.json') > 0,
+//     event.request
+//   )) {
+//     return event.respondWith(new Response('自定义匹配成功'))
+//   }
+// })
+

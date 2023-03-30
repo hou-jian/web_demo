@@ -14,36 +14,28 @@ self.addEventListener('activate', () => {
   console.log('service worker 激活成功')
 })
 
-// 请求拦截与响应，请求拦截只支持get，响应出错返回500状态码
+// 参数一 rule：可以是url匹配、正则匹配、自定义匹配
+// 参数二 handler函数：
+// - 函数返回 Response
+// - 也可以返回 Promise，这个 Promise 再返回 Response
 router.registerRoute(
   '/data.txt',
   () => new Response('hello txt')
 )
 router.registerRoute(
-  '/data.json',
-  () => new Response('hello json')
+  /\/data\.json/,
+  () => new Promise(
+    (resolve, reject) => {
+    // ...一些异步操作
+    resolve(new Response('hello json'))
+  })
 )
+
 router.registerRoute(
-  '/user.json',
-  () => new Response('hello user')
+  request => request.url.indexOf('/user.json') > 0,
+  request => new Response(JSON.stringify({
+    success: true,
+    username: 'monkey',
+    url: request.url,
+  }))
 )
-
-// self.addEventListener('fetch', event => {
-  
-//   // 完整或相对URL匹配
-//   if(match('/data.txt', event.request)) {
-//     return event.respondWith(new Response('完整或相对URL匹配成功'))
-//   }
-//   // 正则匹配
-//   if(match(/\/data\.json/, event.request)) {
-//     return event.respondWith(new Response('正则匹配成功'))
-//   }
-//   // 自定义匹配
-//   if(match(
-//     request => request.url.indexOf('/user.json') > 0,
-//     event.request
-//   )) {
-//     return event.respondWith(new Response('自定义匹配成功'))
-//   }
-// })
-
