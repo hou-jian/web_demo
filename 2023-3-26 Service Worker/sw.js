@@ -14,6 +14,7 @@ self.addEventListener('activate', () => {
   console.log('service worker 激活成功')
 })
 
+// **资源请求的拦截代理**
 // 参数一 rule：可以是url匹配、正则匹配、自定义匹配
 // 参数二 handler函数：
 // - 函数返回 Response
@@ -30,7 +31,6 @@ router.registerRoute(
     resolve(new Response('hello json'))
   })
 )
-
 router.registerRoute(
   request => request.url.indexOf('/user.json') > 0,
   request => new Response(JSON.stringify({

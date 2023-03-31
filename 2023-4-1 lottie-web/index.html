@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./asset/lottie.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --theme-background: rgb(81, 193, 203);
+    }
+
+    .dark {
+      --theme-background: rgb(19, 15, 64);
+    }
+
+    body {
+      background-color: var(--theme-background);
+      transition: background 1.5s;
+    }
+
+    #lottieBox {
+      cursor: pointer;
+      width: 200px;
+      transition: all .8s;
+    }
+
+    #lottieBox:hover {
+      scale: 1.03;
+    }
+
+    #lottieBox2 {
+      width: 50vw;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="lottieBox"></div>
+  <div id="lottieBox2"></div>
+  <script>
+    loadAnimation_1()
+    loadAnimation_2()
+
+    function loadAnimation_1() {
+      const url = 'https://assets9.lottiefiles.com/packages/lf20_duNn3g.json' //如失效了，在 asset 下有备份
+      const lottieBox = document.querySelector("#lottieBox");
+      const anim = lottie.loadAnimation({
+        container: lottieBox,
+        path: url,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+      })
+      lottieBox.addEventListener('click', () => {
+        anim.play()
+        document.body.classList.toggle('dark')
+      })
+
+      anim.addEventListener('complete', () => {
+        if(anim.playDirection > 0) { //设置动画方向
+          anim.setDirection(-1)
+        } else {
+          anim.setDirection(1)
+        }
+      })
+    }
+
+    function loadAnimation_2() {
+      const url = 'https://assets3.lottiefiles.com/packages/lf20_Wo9uEx8Vh6.json'
+      const lottieBox = document.querySelector("#lottieBox2");
+      const anim = lottie.loadAnimation({
+        container: lottieBox,
+        path: url,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+      })
+    }
+
+  </script>
+</body>
+
+</html>
