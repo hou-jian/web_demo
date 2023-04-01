@@ -17,7 +17,8 @@ const storage = multer.diskStorage({
     cb(null, UPLOAD_DIR)
   },
   filename: function(req, file, cb) { //设置文件名
-    cb(null, `${file.originalname}`)
+    const originalname = Buffer.from(file.originalname, 'latin1').toString('utf-8') //解决中文乱码问题
+    cb(null, `${originalname}`)
   }
 })
 const upload = multer({ storage: storage })
