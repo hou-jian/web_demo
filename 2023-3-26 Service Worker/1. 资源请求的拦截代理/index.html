@@ -24,7 +24,7 @@
     }
     const fetch1 = document.querySelector('#fetch1')
     fetch1.addEventListener('click', async () => {
-      const data1 = await fetch('http://127.0.0.1:5500/data.txt').then(res => res.text())
+      const data1 = await fetch('http://127.0.0.1:5502/data.txt').then(res => res.text())
       const data2 = await fetch('/data.txt').then(res => res.text())
       const data3 = await fetch('/data.json').then(res => res.text())
       const data4 = await fetch('/user.json').then(res => res.json())
