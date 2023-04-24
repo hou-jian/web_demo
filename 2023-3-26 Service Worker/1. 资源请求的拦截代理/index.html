@@ -13,7 +13,7 @@
   <button id="fetch1">click</button>
   <script>
     if('serviceWorker' in navigator) {
-      // 防止作用域污染，在安装前，注销掉所有已生效 Service Worker
+      // 开发中，防止作用域污染，在安装前，注销掉所有已生效 Service Worker
       navigator.serviceWorker.getRegistrations()
         .then(regs => {
           for(let reg of regs) {

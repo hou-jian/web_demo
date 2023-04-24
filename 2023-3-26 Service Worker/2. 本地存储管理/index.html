@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <img src="./logo.gif" alt="">
+  <script>
+    if('serviceWorker' in navigator) {
+      // 开发中，防止作用域污染，在安装前，注销掉所有已生效 Service Worker
+      navigator.serviceWorker.getRegistrations()
+        .then(regs => {
+          for(let reg of regs) {
+            reg.unregister()
+          }
+          navigator.serviceWorker.register('./sw.js')
+        })
+    }
+  </script>
+</body>
+
+</html>
