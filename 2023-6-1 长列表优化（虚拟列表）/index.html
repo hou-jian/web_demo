@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .virtual-list {
+      width: 500px;
+      border: 1px solid palegreen;
+      overflow-y: auto;
+    }
+
+    .virtual-list .inner-scroll-container {
+      position: relative;
+    }
+
+    .virtual-list .item {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="virtual-list">
+    <div class="inner-scroll-container">
+    </div>
+  </div>
+
+  <script>
+    const virtualList = document.querySelector('.virtual-list')
+    const innerScrollContainer = document.querySelector('.inner-scroll-container')
+    const data = Array.from({ length: 1000 }, (_, i) => `这是第 ${i} 行~~~`) // mock数据
+    const numRow = data.length // 行数
+    const listHeight = 500
+    const rowHeight = 50
+    const visibleRow = Math.ceil(listHeight / rowHeight) // 可视列数，额外渲染4列
+
+    // - 初始化
+    virtualList.style.height = listHeight + 'px'
+    innerScrollContainer.style.height = numRow * rowHeight + 'px'
+    init() //初始渲染
+
+    // - 监控滚动，根据根据滚动距离，动态更新列表
+    virtualList.addEventListener('scroll', scrollHandle)
+
+    function scrollHandle(e) {
+      const scrollTop = e.target.scrollTop
+      const start = Math.floor(scrollTop / rowHeight)
+      const end = start + visibleRow + 2 // 多渲染2列
+      const virtualListArr = listSlice(start, end, data)
+      renderList(virtualListArr, start * rowHeight)
+    }
+
+    // - 工具函数
+    function init() {
+      const start = 0
+      const end = start + visibleRow + 2 // 多渲染2列
+      const virtualListArr = listSlice(start, end, data)
+      renderList(virtualListArr, start, end)
+    }
+
+    function renderList(virtualListArr, top) {
+      const docFragment = document.createDocumentFragment()
+      virtualListArr.forEach(item => {
+        const div = document.createElement('div')
+        div.textContent = item
+        div.style.top = top + 'px'
+        div.classList.add('item')
+        docFragment.appendChild(div)
+        top += rowHeight
+      })
+      innerScrollContainer.innerHTML = ''
+      innerScrollContainer.appendChild(docFragment)
+    }
+
+    function listSlice(start, end, data) {
+      return data.slice(start, end)
+    }
+  </script>
+</body>
+
+</html>
