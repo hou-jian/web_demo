@@ -1,0 +1,178 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .item:nth-child(odd) {
+    background-color: lightcoral;
+  }
+
+  .item:nth-child(even) {
+    background-color: lightblue;
+  }
+</style>
+
+<h2>例一</h2>
+
+<style>
+  .container-1 {
+    display: grid;
+    /* 绝对单位 */
+    grid-template-columns: 100px 200px 100px;
+    grid-template-rows: 100px 300px 100px;
+    /* 还可以使用百分比 */
+    /* width: 300px;
+    height: 300px;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: 33.33% 33.33% 33.33%; */
+  }
+</style>
+
+<div class="container-1">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<h2>例二 使用 repeat() 复写</h2>
+
+<style>
+  .container-2 {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    /* 绝对单位 */
+    /* grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px); */
+    /* 百分比单位 */
+    /* grid-template-columns: repeat(3, 33.33%);
+    grid-template-rows: repeat(3, 33.33%); */
+    /* 比例单位 fr */
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 50px 1fr 2fr;
+  }
+</style>
+
+<div class="container-2">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<h2>例三 repeat() auto-fill 关键字</h2>
+<p>项目大小固定，容器不固定，希望尽可能的容纳更多单元格时使用。</p>
+
+<style>
+  .container-3 {
+    width: 100vw;
+    height: 200px;
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, 100px);
+    grid-template-rows: repeat(auto-fill, 100px);
+  }
+</style>
+
+<div class="container-3">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+<!-- 除了auto-fill，还有一个关键字auto-fit，两者的行为基本是相同的。
+  只有当容器足够宽，可以在一行容纳所有单元格，
+  并且单元格宽度不固定的时候，才会有行为差异：auto-fill会用空格子填满剩余宽度，
+  auto-fit则会尽量扩大单元格的宽度。 -->
+
+<h2>例四 minmax()</h2>
+
+<style>
+  .container-4 {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    /* 第三列取值范围在 100px ~ 3/6 之间 */
+    grid-template-columns: 1fr 2fr minmax(100px, 3fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+</style>
+
+<div class="container-4">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<h2>例五 auto 关键字</h2>
+
+<style>
+  .container-5 {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    /* 表示自动，由浏览器决定 */
+    grid-template-columns: 50px auto 50px;
+    grid-template-rows: repeat(3, 1fr);
+  }
+</style>
+
+<div class="container-5">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<h2>例六 网格线的名称</h2>
+
+<style>
+  .container-6 {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    /* 使用方括号，指定网格线的名字，方便以后引用。（也可以用数字引用） */
+    grid-template-columns: [c1] 100px [c2] 100px [c3] auto [c4];
+    grid-template-rows: [r1] 100px [r2] 100px [r3] auto [r4];
+  }
+</style>
+
+<div class="container-6">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
