@@ -1,0 +1,107 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .item:nth-child(odd) {
+    background-color: lightcoral;
+  }
+
+  .item:nth-child(even) {
+    background-color: lightblue;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px 100px;
+  }
+
+  .item-1 {
+    background-color: #ef342a;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .item-2 {
+    background-color: #f68f26;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+</style>
+
+<!-- 1 -->
+<h2>row 排序（默认）</h2>
+<div class="container">
+  <div class="item-1">1</div>
+  <div class="item-2">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<!-- 2 -->
+<h2>colum 排序</h2>
+<style>
+  .container-colum {
+    grid-auto-flow: column;
+  }
+</style>
+
+<!-- 3 -->
+<div class="container container-colum">
+  <div class="item-1">1</div>
+  <div class="item-2">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<!-- 4 -->
+<h2>row dense</h2>
+<p>和 row 对比可知，浏览器会尽可能的紧密填满</p>
+<style>
+  .container-row-dense {
+    grid-auto-flow: row dense;
+  }
+</style>
+<div class="container container-row-dense">
+  <div class="item-1">1</div>
+  <div class="item-2">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<!-- 5 -->
+<h2>row dense</h2>
+<p>和 column 对比可知，浏览器会尽可能的紧密填满</p>
+<style>
+  .container-column-dense {
+    grid-auto-flow: column dense;
+  }
+</style>
+<div class="container container-column-dense">
+  <div class="item-1">1</div>
+  <div class="item-2">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>

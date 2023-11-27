@@ -1,0 +1,137 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .item:nth-child(odd) {
+    background-color: lightcoral;
+  }
+
+  .item:nth-child(even) {
+    background-color: lightblue;
+  }
+
+  .container {
+    width: 100%;
+    height: 500px;
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    border: 2px solid #000;
+
+    /* 项目整体水平方向上如何对齐 */
+    /* start | end | center | stretch | space-around 
+    | space-between | space-evenly; */
+    justify-content: center;
+
+    /* 项目整体垂直方向上如何对齐 */
+    /* start | end | center | stretch | space-around 
+    | space-between | space-evenly;  */
+    align-content: center;
+
+    /* 简写：place-content: <align-content> <justify-content> */
+  }
+
+  .item {
+    text-align: center;
+    font-size: 4em;
+  }
+</style>
+
+<p>start - 对齐容器的起始边框。</p>
+<div class="container" style="justify-content: start;">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<p>end - 对齐容器的结束边框。</p>
+<div class="container" style="justify-content: end;">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<p>center</p>
+<div class="container" style="justify-content: center;">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<p>stretch - 'auto' 的项目会被拉伸</p>
+<style>
+  .container-stretch {
+    grid-template-columns: 100px auto 100px;
+    justify-content: stretch;
+  }
+</style>
+<div class="container container-stretch">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<p>space-around - 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与容器边框的间隔大一倍。</p>
+<div class="container" style="justify-content: space-around;">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<p>space-between - 项目与项目的间隔相等，项目与容器边框之间没有间隔。</p>
+<div class="container" style="justify-content: space-between;">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
+
+<p>space-evenly - 项目与项目的间隔相等，项目与容器边框之间也是同样长度的间隔。</p>
+<div class="container" style="justify-content: space-evenly;">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+  <div class="item">7</div>
+  <div class="item">8</div>
+  <div class="item">9</div>
+</div>
