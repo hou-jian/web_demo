@@ -1,0 +1,37 @@
+<!-- 
+  stroke-dashoffset、stroke-dasharray解释可以看这篇文章：https://www.cnblogs.com/daisygogogo/p/11044353.html
+ -->
+<style>
+  @keyframes animate-svg-stroke-1 {
+    0% {
+      /*左偏移一个实线长度，意味着初始状态只有间隔（空白）部分*/
+      stroke-dashoffset: 45px;
+      /*
+      该属性创建虚线，实线与间隔均等于45px，
+      因为 path 长度也等于 45px，所以只会显示一个实现部分。
+      */
+      stroke-dasharray: 45px;
+    }
+
+    100% {
+      /*恢复原位，就能画出一条 path 路径了*/
+      stroke-dashoffset: 0;
+      stroke-dasharray: 45px;
+    }
+  }
+
+  .svg-elem-1 {
+    animation: animate-svg-stroke-1 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0s both;
+  }
+</style>
+
+<svg width="37" height="8" viewBox="0 0 37 8" fill="none" class="sc-d2e67f0c-0 sc-d2e67f0c-3 ctmMfn jFIPMO">
+  <path
+    d="M1 5.39971C7.48565 -1.08593 6.44837 -0.12827 8.33643 6.47992C8.34809 6.52075 11.6019 2.72875 12.3422 2.33912C13.8991 1.5197 16.6594 2.96924 18.3734 2.96924C21.665 2.96924 23.1972 1.69759 26.745 2.78921C29.7551 3.71539 32.6954 3.7794 35.8368 3.7794"
+    stroke="hsl(333deg, 100%, 45%)"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="svg-elem-1"
+  ></path>
+</svg>
