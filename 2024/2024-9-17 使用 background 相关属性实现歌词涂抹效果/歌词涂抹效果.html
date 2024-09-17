@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: black;
+        font-size: 40px;
+      }
+      .box {
+        display: inline;
+        /* 这里设置渐变是因为：渐变被视为图片，可以被 background-size 控制 */
+        background: rgba(255, 255, 255, 0.3) linear-gradient(to right, #31c27c, #31c27c) no-repeat 0 0;
+        /* 使背景只应用于文字 */
+        background-clip: text;
+        /* 文字颜色透明 */
+        color: transparent;
+        /* 控制该属性 x 百分比，就可以控制渐变背景的宽度，以实现涂抹效果 */
+        /* background-size: 40% 100%; */
+        /* 这里用动画演示一下歌词涂抹效果 */
+        animation: text 3s linear 0s 1 normal none;
+      }
+      @keyframes text {
+        0% {
+          background-size: 0% 100%;
+        }
+        100% {
+          background-size: 100% 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p class="box">
+      测试文本 测试文本 测试文本 测试文本 测试文本 测试文本 测试文本 测试文本 测试文本 测试文本 测试文本 测试文本
+    </p>
+  </body>
+</html>
