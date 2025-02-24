@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #141733;
+        margin: 0;
+        padding: 10vw;
+      }
+
+      .box {
+        width: 100px;
+        height: 100px;
+        margin: 20px;
+        border: 4px dashed #f4ead5;
+        border-radius: 10px;
+        background-color: lightseagreen;
+      }
+
+      /* 常规方式 */
+      @keyframes slide-top {
+        from {
+          translate: -100px;
+        }
+        to {
+          translate: 200px;
+        }
+      }
+
+      .top-box {
+        animation: slide-top 3s infinite alternate;
+      }
+
+      /* 自定义属性方式 */
+      @property --x {
+        syntax: "<length>";
+        inherits: true;
+        initial-value: 0px;
+      }
+
+      @keyframes slide-bottom {
+        from {
+          --x: -100px;
+        }
+        to {
+          --x: 200px;
+        }
+      }
+
+      .bottom-box {
+        translate: var(--x);
+        animation: slide-top 3s infinite alternate;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box top-box"></div>
+    <div class="box bottom-box"></div>
+  </body>
+</html>

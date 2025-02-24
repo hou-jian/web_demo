@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #141733;
+        margin: 0;
+      }
+
+      @property --angle {
+        syntax: "<angle>";
+        inherits: true;
+        initial-value: 0deg;
+      }
+
+      @keyframes rotation {
+        from {
+          --angle: 0deg;
+        }
+        to {
+          --angle: 360deg;
+        }
+      }
+
+      /*
+        目标：圆周运动 
+        x,y 坐标与半径 r，正好构成直角三角形
+        我们已知斜边（半径）、角度(0-360°)，基于余弦、正弦就可以算出坐标(x, y)
+        如果忘了可参考：https://www.mathsisfun.com/sine-cosine-tangent.html
+      */
+      .circle-rotation {
+        /* 斜边 */
+        --r: 100px;
+        /* 求邻边 */
+        --x: calc(cos(var(--angle)) * var(--r));
+        /* 求对边 */
+        --y: calc(sin(var(--angle)) * var(--r));
+        translate: var(--x) var(--y);
+        animation: rotation 6s linear infinite;
+      }
+
+      .circle {
+        width: 50px;
+        height: 50px;
+        margin: 20px;
+        border: 4px dashed #f4ead5;
+        border-radius: 50%;
+        background-color: lightseagreen;
+        will-change: translate;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="circle circle-rotation"></div>
+  </body>
+</html>
